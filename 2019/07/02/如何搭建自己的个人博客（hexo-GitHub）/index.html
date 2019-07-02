@@ -200,22 +200,77 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <h1 id="如何使用hexo-GitHub来搭建一个个人博客"><a href="#如何使用hexo-GitHub来搭建一个个人博客" class="headerlink" title="如何使用hexo+GitHub来搭建一个个人博客"></a>如何使用hexo+GitHub来搭建一个个人博客</h1><p>网上其实有很多的关于hexo+GitHub搭建个人博客的教程，</p>
-<h2 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h2>
+                <h1 id="如何使用hexo-GitHub来搭建一个个人博客"><a href="#如何使用hexo-GitHub来搭建一个个人博客" class="headerlink" title="如何使用hexo+GitHub来搭建一个个人博客"></a>如何使用hexo+GitHub来搭建一个个人博客</h1><p>​        很多人说自己搭建完博客之后，第一篇博客也就出来了……所以理所应当的，我的第一篇博客就是怎么来搭建一个博客啦。虽然网上已经有很多的详细教程了，但是由于每个人的操作系统和环境配置不同，不太可能找到完全适合自己的一篇教程，该遇到的坑还是会遇到。我就是看了一个教程视频才萌发了搭建博客的想法，这个教程20分钟就完成了搭建，而我实际上却整整用了一天的时间才算是搞定了hexo，中间遇到了很多莫名其妙的问题，幸亏相关的教程在网上是真的多，还是可以找到相应的解决方法的。以下将是我搭建博客的全过程，希望能给遇到相同问题的人提供一点帮助。</p>
+<ul>
+<li>操作系统：win10</li>
+<li>环境配置：无，一片空白</li>
+</ul>
+<hr>
+<h2 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h2><p>可以参照hexo官网的教程：<a href="https://hexo.io/zh-cn/docs/" target="_blank" rel="noopener">hexo官网</a></p>
+<p>里面有讲到在安装hexo之前，必须先要安装<strong>Node.js</strong>和<strong>Git</strong>这两个东西：</p>
+<p><img src="https://raw.githubusercontent.com/max827/imgcloud/master/data/20190702123143.png" alt></p>
+<h3 id="Node-js安装"><a href="#Node-js安装" class="headerlink" title="Node.js安装"></a>Node.js安装</h3><p><strong>Node.js</strong>可以去官网上下载：<a href="https://nodejs.org/en/" target="_blank" rel="noopener">Node.js官网</a></p>
+<p><img src="https://raw.githubusercontent.com/max827/imgcloud/master/data/20190702123454.png" alt></p>
+<p>下载好之后直接默认安装即可</p>
+<h3 id="Git安装"><a href="#Git安装" class="headerlink" title="Git安装"></a>Git安装</h3><p><strong>Git</strong>由于不能翻墙，去官网上下载会很慢，所以可以直接从GitHub上下载：<a href="https://github.com/waylau/git-for-win" target="_blank" rel="noopener">国内Git下载地址</a></p>
+<hr>
+<p>如果<strong>Node.js</strong>安装好了，可以在win10的命令提示符中查看他们的版本（<strong>npm</strong>是跟随Node.js一起安装的），如果可以正常显示，说明你安装成功了</p>
+<p><img src="https://raw.githubusercontent.com/max827/imgcloud/master/data/20190702153755.png" alt></p>
+<p>接下去的操作基本上都将使用命令行操作，你可以使用win10自带的命令提示符，也可以使用刚刚安装的<strong>Git Bash</strong>来完成命令行的操作，<strong>这里我也不知道什么原因，有些命令在win10的cmd上可以运行，到了Git Bash上又不行，有些又只能在Git Bash运行，所以下面的命令可能在这两者之间来回切换，我下面的命令中，前面带着美元符号“$”的，就是在Git Bash上输入的命令；没有带的，就是在win10的cmd上输入的命令，<u>如果你自己试验时发现输入的命令在win10的cmd上不行，就换成Git Bash，两种选择供你使用</u></strong>，下图是如何打开Git Bash（点击鼠标右键出现）：</p>
+<p><img src="https://raw.githubusercontent.com/max827/imgcloud/master/data/20190702154556.png" alt></p>
+<hr>
+<p>点击Git Bash Here,打开界面如下：</p>
+<p><img src="https://raw.githubusercontent.com/max827/imgcloud/master/data/20190702154725.png" alt></p>
+<p>这个时候就可以开始输入命令行来真正开始安装hexo了</p>
+<h3 id="hexo安装"><a href="#hexo安装" class="headerlink" title="hexo安装"></a>hexo安装</h3><p>按照官方教程，本来有了Git和Node.js之后就可以输入以下命令来安装了：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
+
+<p>但是由于众所周知的原因，使用npm下载国外的包会很慢，所以这个时候需要使用淘宝镜像cnpm来代替npm，输入以下命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install -g cnpm --registry=https://registry.npm.taobao.org</span><br></pre></td></tr></table></figure>
+
+<p>安装好了cnpm之后，可以在Git bash中查看cnpm的版本：</p>
+<p><img src="https://raw.githubusercontent.com/max827/imgcloud/master/data/20190702160338.png" alt></p>
+<p>这就说明成功了，接下来就可以来安装hexo了：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ cnpm install -g hexo-cli</span><br></pre></td></tr></table></figure>
+
+<p>其实就是把npm换成了cnpm而已。</p>
+<p><strong>以上就完成 了全部的环境搭建 了，还是比较简单的</strong></p>
+<hr>
+<h2 id="搭建博客"><a href="#搭建博客" class="headerlink" title="搭建博客"></a>搭建博客</h2><h3 id="初始化博客"><a href="#初始化博客" class="headerlink" title="初始化博客"></a>初始化博客</h3><p>首先新建一个文件夹（名字地方都随意，新建一个就好），我是在E盘新建了一个blog1文件夹，这个文件夹就是以后blog的存放地点了，要是出了什么问题，直接把这个文件夹删掉重来也是OK的。</p>
+<p><img src="https://raw.githubusercontent.com/max827/imgcloud/master/data/20190702161123.png" alt></p>
+<p>接下来打开win10的cmd，然后进入E:/blog1目录下，在这个目录下输入以下代码进行hexo的初始化</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo init</span><br></pre></td></tr></table></figure>
+
+<p>这个初始化过程可能会比你所想的要漫长的多……需要耐心等待</p>
+<p>此时可能会出现界面卡住的情况：</p>
+<p><img src="https://raw.githubusercontent.com/max827/imgcloud/master/data/20190702191628.png" alt></p>
+<p>这个时候看上面的提示，提示说你缺少了core-js@3这个东西，那少了就安装一下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cnpm install core-js@3</span><br></pre></td></tr></table></figure>
+
+<p>输入上面的命令后，应该就可以安装成功core-js@3了，然后重新输入hexo init，注意！这里要将blog1中的全部文件先全部删除，之前虽然算是初始化失败了，但是依旧有文件被下载到了blog1中，如果不全部删光的话，回出现下面的错误：</p>
+<p><img src="https://raw.githubusercontent.com/max827/imgcloud/master/data/20190702193104.png" alt></p>
+<p>删光了blog1中的全部文件之后，就可以再次输入hexo init命令了，成功的界面如下所示：</p>
+<p><img src="https://raw.githubusercontent.com/max827/imgcloud/master/data/20190702193220.png" alt></p>
+<p>出现 Start blogging with Hexo之后，表明你的博客初始化成功了！这个时候，其实你的博客就算是已经搭建完成了！</p>
+<hr>
+<h3 id="访问博客"><a href="#访问博客" class="headerlink" title="访问博客"></a>访问博客</h3><p>接下来就可以访问你亲手搭建的博客了，在命令行中输入以下代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo s</span><br></pre></td></tr></table></figure>
+
+<p>s代表server，表示开启hexo的后台服务，开启之后出现以下界面：</p>
+<p><img src="https://raw.githubusercontent.com/max827/imgcloud/master/data/20190702193641.png" alt></p>
+<p>这里提供了你可以进行访问的本地地址：<a href="http://localhost:4000" target="_blank" rel="noopener">http://localhost:4000</a></p>
+<p>当你在浏览器中输入这个地址时，你就可以看到自己博客的样子了！</p>
+<p><img src="https://raw.githubusercontent.com/max827/imgcloud/master/data/20190702193910.png" alt></p>
+<p>这是默认的主题，后续你可以去官网上找自己喜欢的主题并更换掉，更换主题官网上就有教程，这里就不细说了。</p>
+<hr>
+<h2 id="部署博客"><a href="#部署博客" class="headerlink" title="部署博客"></a>部署博客</h2><p>我们写博客自然不是只在本地上面看得，接下来就要将我们的博客部署到GitHub上（GitHub的访问其实比较慢，但谁让人家免费呢……），这样我们就可以通过域名直接在互联网上发布我们的博客了</p>
+
                 
 
                 <hr>
                 <!-- Pager -->
                 <ul class="pager">
                     
-                        <li class="previous">
-                            <a href="/2019/07/02/test/" data-toggle="tooltip" data-placement="top" title="test">&larr; Previous post</a>
-                        </li>
-                    
-                    
-                        <li class="next">
-                            <a href="/2019/07/01/first-blog/" data-toggle="tooltip" data-placement="top" title="first blog">Next post &rarr;</a>
-                        </li>
                     
                 </ul>
 
