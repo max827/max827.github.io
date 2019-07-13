@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content>
+    <meta name="keyword" content>
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <title>
+        
+          tensorflow学习笔记 - null
+        
+    </title>
+
+    <link rel="canonical" href="http://yoursite.com/2019/07/09/tensorflow学习笔记/">
+
+    <!-- Bootstrap Core CSS -->
+
+   <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.4.1/css/bootstrap.min.css">
+
+    
+
+    <!-- Custom CSS --> 
+    <link rel="stylesheet" href="/css/beantech.min.css">
+
+    <link rel="stylesheet" href="/css/donate.css">
+	<link rel="stylesheet" href="/css/w3.css">
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <link rel="stylesheet" href="/css/widget.css">
+
+    <link rel="stylesheet" href="/css/rocket.css">
+
+    <link rel="stylesheet" href="/css/signature.css">
+
+    <link rel="stylesheet" href="/css/toc.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+	
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+    }
+   .post-heading{
+    padding:20px;
+    }
+  .person {
+    border: 10px solid transparent;
+    margin-bottom: 25px;
+    width: 80%;
+    height: 80%;
+    opacity: 0.7;
+  }
+  .person:hover {
+    border-color: #f1f1f1;
+  }
+
+</style>
+
+<header id="headerid" class="w3-indigo intro-header" style="position:relative;">
+    <!-- Signature -->
+	
+        <div class="container">
+            <div class=" row" >
+			
+			<canvas id="particles-js-canvas" style="position:absolute;z-index:1;top:0px;left:0px;" width="100%" height="50%"></canvas>
+			
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1" style="z-index:2;">
+                
+                    <div class="post-heading" style="padding:40px">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#tensorflow" title="tensorflow">tensorflow</a>
+                            
+                        </div>
+                        <h1>tensorflow学习笔记</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by John Doe on
+                            2019-07-09
+                        </span>
+                    </div>
+                
+                </div>
+            </div>
+        </div>
+  
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Hexo</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a  href="/">Homepage</a>
+                    </li>
+
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Modify by Yu-Hsuan Yen -->
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <p>[TOC]</p>
+<p>tensorflow由两个词语组成，tensor和flow。</p>
+<p><strong>tensor</strong>代表了张量，张量是一种数学概念，因为标量和矢量无法代表所有的数据，所以引入了张量，我们可以将标量视为零阶张量，矢量视为一阶张量，那么矩阵就是二阶张量。</p>
+<p><img src="https://raw.githubusercontent.com/max827/imgcloud/master/data/20190709220308.png" alt></p>
+<p><strong>flow</strong>有流动的意思</p>
+<p>所以tensorflow的意思大致就可以理解为<strong>数据流</strong>的意思</p>
+<hr>
+<p>安装tensorflow的过程简直太麻烦了（可能是因为最近国内镜像源被禁止了的关系……），以后单独写一篇博客来介绍吧。</p>
+<hr>
+<h1 id="深度学习与机器学习的区别"><a href="#深度学习与机器学习的区别" class="headerlink" title="深度学习与机器学习的区别"></a>深度学习与机器学习的区别</h1><p>先来大的方向上说一下为什么要学习深度学习。</p>
+<p>深度学习是一种特殊的机器学习，主要就是指神经网络吧（我接触到的），它的学习过程可以用流向图（flow graph）来表示：</p>
+<p><img src="https://raw.githubusercontent.com/max827/imgcloud/master/data/20190709221933.png" alt></p>
+<p>其中隐含层的层数越多，意味着它的“深度”越深，而且随着层数的深入，会逐渐变得越来越抽象。</p>
+<h2 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h2><p>深度学习相比于机器学习，有以下优点：</p>
+<ol>
+<li>不需要特征工程</li>
+<li>没有上限，数据量越大，效果越好</li>
+</ol>
+<h1 id="tensorflow基本操作"><a href="#tensorflow基本操作" class="headerlink" title="tensorflow基本操作"></a>tensorflow基本操作</h1><h2 id="tensorflow组成："><a href="#tensorflow组成：" class="headerlink" title="tensorflow组成："></a>tensorflow组成：</h2><ol>
+<li><p><strong>图</strong>：定义数据和操作（只定义不运行）</p>
+<ul>
+<li>张量（tensor对象即数据）</li>
+<li>操作（operation）<ul>
+<li>变量（variable）</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>会话</strong>：执⾏图（运行图所定义的那些操作）</p>
+<p>为啥要分成这两个部分呢？可以参考<a href="https://blog.csdn.net/qq_41455420/article/details/84777222" target="_blank" rel="noopener">tensorflow设计理念</a></p>
+</li>
+</ol>
+<h2 id="tensorflow流程"><a href="#tensorflow流程" class="headerlink" title="tensorflow流程"></a>tensorflow流程</h2><ul>
+<li><p>一个构建图阶段——流程图：定义数据（张量Tensor）和操作（节点Op）</p>
+</li>
+<li><p>一个执行图阶段——调用各方资源，将定义好的数据和操作运行起来</p>
+</li>
+</ul>
+<h3 id="图相关操作"><a href="#图相关操作" class="headerlink" title="图相关操作"></a>图相关操作</h3><ol>
+<li><p>默认图<br>查看默认图的方法<br>1）调用方法</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tf.get_default_graph()</span><br></pre></td></tr></table></figure>
+
+<p>2）查看属性</p>
+<pre><code>.graph</code></pre></li>
+<li><p>创建图</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">new_g = tf.Graph()</span><br><span class="line"><span class="keyword">with</span> new_g.as_default():</span><br><span class="line">	<span class="comment">#定义数据和操作</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h4 id="张量（tensor）"><a href="#张量（tensor）" class="headerlink" title="张量（tensor）"></a>张量（tensor）</h4><p>张量的许多特性和ndarray（numpy中的数组对象）类似，最重要的两个属性是<strong>类型</strong>和<strong>形状</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Tensor(&quot;add:0&quot;, shape=(), dtype=int32)</span><br><span class="line">		指令名称  形状      类型</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>张量的阶（形状）<br>n维数组就是n阶张量</p>
+</li>
+<li><p>张量的类型<br>创建张量的时候，如果不指定类型，默认 tf.float32<br>整型 tf.int32<br>浮点型 tf.float32</p>
+</li>
+<li><p>创建张量的指令</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#生成一个值为4.0的常量</span></span><br><span class="line">tensor1 = tf.constant(<span class="number">4.0</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>张量的变换</p>
+<ul>
+<li><p>类型的修改</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tf.cast(tensor, dtype)</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+</li>
+</ul>
+<pre><code>不会改变原始的tensor
+
+返回新的改变类型后的tensor</code></pre><ul>
+<li><p>形状的修改</p>
+<pre><code>1.  如何改变静态形状—**初始创建张量时的形状**
+    什么情况下才可以改变/更新静态形状？只有在形状没有完全固定下来的情况下：</code></pre></li>
+</ul>
+<pre><code>      <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 没有完全固定下来的静态形状</span></span><br><span class="line">a_p = tf.placeholder(dtype=tf.float32, shape=[<span class="literal">None</span>, <span class="literal">None</span>])</span><br><span class="line">b_p = tf.placeholder(dtype=tf.float32, shape=[<span class="literal">None</span>, <span class="number">10</span>])</span><br><span class="line">c_p = tf.placeholder(dtype=tf.float32, shape=[<span class="number">3</span>, <span class="number">2</span>])</span><br></pre></td></tr></table></figure>
+
+
+
+
+      这个函数（placeholder）提供占位符，并且可以用来声明数据的存储地点。因为TensorFlow是基于计算图的，他要为所有的数据都声明一个存储位置，定义这个数据和在数据上的操作。因为训练模型的时候可能并不需要全部的数据，因此Tensorflow提供了这样一种方法，只定义数据的位置和操作，而具体的值则在运行时再指定，这样可以少加载很多数据，提升运行效率。
+
+      tensor.set_shape(shape)
+
+      <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 更新形状未确定的部分</span></span><br><span class="line">a_p.set_shape([<span class="number">2</span>, <span class="number">3</span>])</span><br><span class="line">b_p.set_shape([<span class="number">2</span>, <span class="number">10</span>])</span><br><span class="line">c_p.set_shape([<span class="number">2</span>, <span class="number">3</span>])</span><br></pre></td></tr></table></figure>
+
+
+      tips：事实上只能更改上面所定义的None的值，像b_p这个tensor变量你是不能更改后面10这个数字的。
+
+2. 如何改变动态形状—**相当于新建了一个tensor变量，不过元素还是原来的那些元素**
+
+   <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tf.reshape(tensor, shape)</span><br></pre></td></tr></table></figure>
+
+
+    不会改变原始的tensor
+    返回新的改变形状后的tensor
+
+   **动态创建新张量时，张量的元素个数必须匹配**</code></pre><ul>
+<li><p>张量的数学运算</p>
+<p>具体参考<a href="https://tensorflow.google.cn/api_docs/python/tf/math" target="_blank" rel="noopener">API</a></p>
+</li>
+</ul>
+<h4 id="操作（operation）"><a href="#操作（operation）" class="headerlink" title="操作（operation）"></a>操作（operation）</h4><p>数据：Tensor对象<br>操作：Operation对象 - Op</p>
+<p>1 常见OP<br>            操作函数                                                &amp;     操作对象<br>            tf.constant(Tensor对象)                              输入Tensor对象 -Const-输出 Tensor对象<br>            tf.add(Tensor对象1, Tensor对象2)             输入Tensor对象1, Tensor对象2 - Add对象 - 输出 Tensor对象3</p>
+<p>2 指令名称</p>
+<p>​            不止是指令，<strong>tensorflow中所有的对象应该都有一个name的属性</strong>，这个属性可以更改张量或者操作的名称甚至图的名称，甚至还可以通过名字来创建一个命名空间，使得整个操作可以更具有<strong>结构感</strong>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> tf.variable_scope(<span class="string">"prepare_data"</span>):<span class="comment">#创建一个名为prepare_date的变量上下文（命名空间）</span></span><br><span class="line">       <span class="comment">#接下来是在这个命名空间内的张量和操作</span></span><br><span class="line">       <span class="comment">#制造数据</span></span><br><span class="line">       x_train=tf.random_normal(shape=[<span class="number">100</span>,<span class="number">1</span>])</span><br><span class="line">       y_true=tf.matmul(x_train,[[<span class="number">0.8</span>,<span class="number">0.6</span>]])+<span class="number">0.7</span></span><br></pre></td></tr></table></figure>
+
+<p> 这个结构感在代码里是体现不太出来的……，感觉只是让代码更加麻烦而已。但是到了可视化数据流图（tensorboard）的时候，就知道把各种操作和数据的名字改成能一眼就看出来这是个什么东西是多么重要了。</p>
+<h5 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h5><p>为了储存<strong>模型的参数</strong>而设计，具有存储持久化，可修改值，可指定被训练等特点</p>
+<ul>
+<li><p>创建变量：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#创建一个名为a，值为50的变量 </span></span><br><span class="line">a = tf.Variable(initial_value=<span class="number">50</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>变量初始化</p>
+<p>变量（variable）与常量（constant）不同的是，变量只是指定了生成的方法，但是在运行之前并没有真正的进行初始化，所以对于所有变量都应该运行 <code>val.initializer</code> 初始化操作，出于方便，TensorFlow提供了统一的初始化操作</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#全局初始化变量</span></span><br><span class="line">init_op = tf.global_variables_initializer()</span><br><span class="line"><span class="comment">#需要使用session来运行</span></span><br><span class="line">sess.run(init_op)</span><br></pre></td></tr></table></figure>
+
+<p>还有很多关于变量的小知识，可以参考以下几篇博文：</p>
+<p><a href="https://blog.csdn.net/baoqiaoben/article/details/82913324" target="_blank" rel="noopener">常量和变量的区别</a>        <a href="https://www.jianshu.com/p/bebcdfb74fb1" target="_blank" rel="noopener">变量初始化</a></p>
+</li>
+</ul>
+<h3 id="会话的相关操作"><a href="#会话的相关操作" class="headerlink" title="会话的相关操作"></a>会话的相关操作</h3><p>tf.Session：用于完整的程序当中<br>tf.InteractiveSession：用于交互式上下文中的TensorFlow ，例如shell（在命令行中运行）</p>
+<ul>
+<li><p>会话掌握资源，用完要回收 - 上下文管理器</p>
+<p>第一种方法：    </p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="comment"># 创建一个会话</span></span><br><span class="line">sess = tf.Session()</span><br><span class="line">sess.run(...)</span><br><span class="line"><span class="comment"># 关闭会话使得本次运行中使用到的资源可以被释放</span></span><br></pre></td></tr></table></figure>
+
+<p>​      第二种方法：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="comment"># 创建一个会话，并通过Python中的上下文管理器来管理这个会话。</span></span><br><span class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:<span class="comment"># 使用"with"语句，自动关闭会话</span></span><br><span class="line">    sess.run(...)</span><br></pre></td></tr></table></figure>
+
+<p>​      一般使用第二种方法</p>
+<ul>
+<li><p>初始化会话对象时的参数</p>
+<ul>
+<li><p>graph=None</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> tf.Session(graph=g) <span class="keyword">as</span> session:</span><br><span class="line">	sess.run()</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>target：如果将此参数留空（默认设置），</p>
+<pre><code>会话将仅使用本地计算机中的设备。
+可以指定 grpc:// 网址，以便指定 TensorFlow 服务器的地址，
+这使得会话可以访问该服务器控制的计算机上的所有设备。</code></pre></li>
+<li><p>config：此参数允许您指定一个 tf.ConfigProto</p>
+<pre><code>以便控制会话的行为。例如，ConfigProto协议用于打印设备使用信息</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> tf.Session(config=tf.ConfigProto(allow_soft_placement=<span class="literal">True</span>,</span><br><span class="line">                                        log_device_placement=<span class="literal">True</span>)) <span class="keyword">as</span> sess:</span><br><span class="line">    sess.run()</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>run(fetches,feed_dict=None)</p>
+<ul>
+<li><p>fetches:输入一个OP，或者OP的列表，元组等</p>
+</li>
+<li><p>feed_dict：用于填充使用了占位符（placeholder），还没有具体值的张量</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">a = tf.placeholder(tf.float32)</span><br><span class="line">b = tf.placeholder(tf.float32)</span><br><span class="line">c = tf.add(a_ph, b_ph)</span><br><span class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</span><br><span class="line">   <span class="comment">#填充a和b</span></span><br><span class="line">   c_value = sess.run(c, feed_dict=&#123;a: <span class="number">3.9</span>, b: <span class="number">4.8</span>&#125;)</span><br><span class="line">   <span class="comment">#                fetches,feed_dict</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>eval（）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"></span><br><span class="line">a = tf.constant([<span class="number">1.0</span>],name=<span class="string">"a"</span>)</span><br><span class="line">b = tf.constant([<span class="number">2.0</span>],name=<span class="string">"b"</span>)</span><br><span class="line">result = a + b</span><br><span class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</span><br><span class="line">    <span class="comment">#可以直接通过eval（）方法将tensor转成ndarray输出</span></span><br><span class="line">    print(result .eval())</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="模型的保存与加载"><a href="#模型的保存与加载" class="headerlink" title="模型的保存与加载"></a>模型的保存与加载</h3><p>saver = tf.train.Saver(var_list=None,max_to_keep=5)<br>1）实例化Saver<br>2）保存<br>      saver.save(sess, path)<br>3）加载<br>      saver.restore(sess, path)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#将会话保存到指定目录中</span></span><br><span class="line">saver.save(sess, <span class="string">"./tmp/model/my_linear.ckpt"</span>)</span><br><span class="line"><span class="comment">#先检查文件是否存在</span></span><br><span class="line"><span class="keyword">if</span> os.path.exists(<span class="string">"./tmp/model/checkpoint"</span>):</span><br><span class="line">    <span class="comment">#加载文件</span></span><br><span class="line">	saver.restore(sess, <span class="string">"./tmp/model/my_linear.ckpt"</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><p>普通的示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="comment">#减少警告</span></span><br><span class="line">os.environ[<span class="string">'TF_CPP_MIN_LOG_LEVEL'</span>]=<span class="string">'2'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#创建新图</span></span><br><span class="line">g=tf.Graph()</span><br><span class="line"><span class="comment">#将新图设置成默认图</span></span><br><span class="line"><span class="keyword">with</span> g.as_default():</span><br><span class="line">    <span class="comment">#设定张量和操作</span></span><br><span class="line">    a=tf.constant(<span class="number">20</span>)</span><br><span class="line">    b=tf.constant(<span class="number">30</span>)</span><br><span class="line">    c=a+b</span><br><span class="line">print(c)</span><br><span class="line"><span class="comment">#开启会话</span></span><br><span class="line"><span class="keyword">with</span> tf.Session(graph=g) <span class="keyword">as</span> session:</span><br><span class="line">    value=session.run(c)</span><br><span class="line">    print(value)</span><br></pre></td></tr></table></figure>
+
+<p>实现线性回归：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">linear_regression</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="comment">#设定变量上下文，即命名空间</span></span><br><span class="line">    <span class="keyword">with</span> tf.variable_scope(<span class="string">"prepare_data"</span>):</span><br><span class="line">        <span class="comment">#制造数据，手动制造符合正态分布的数据</span></span><br><span class="line">        x_train=tf.random_normal(shape=[<span class="number">100</span>,<span class="number">1</span>])</span><br><span class="line">        y_true=tf.matmul(x_train,[[<span class="number">0.8</span>]])+<span class="number">0.7</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">with</span> tf.variable_scope(<span class="string">"build_model"</span>):</span><br><span class="line">        <span class="comment">#构造模型</span></span><br><span class="line">        <span class="comment">#使用tensorflow中的变量来存储参数</span></span><br><span class="line">        weight=tf.Variable(initial_value=tf.random_normal(shape=[<span class="number">1</span>,<span class="number">1</span>]))</span><br><span class="line">        bias = tf.Variable(initial_value=tf.random_normal(shape=[<span class="number">1</span>,<span class="number">1</span>]))</span><br><span class="line">        y_predict=tf.matmul(x_train,weight)+bias</span><br><span class="line"></span><br><span class="line">    <span class="keyword">with</span> tf.variable_scope(<span class="string">"loss_function"</span>):</span><br><span class="line">        <span class="comment">#构造损失函数</span></span><br><span class="line">        error=tf.reduce_mean(tf.square(y_predict-y_true))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">with</span> tf.variable_scope(<span class="string">"optimzer"</span>):</span><br><span class="line">        <span class="comment">#优化损失</span></span><br><span class="line">        optimizer=tf.train.GradientDescentOptimizer(learning_rate=<span class="number">0.01</span>).minimize(error)</span><br><span class="line"></span><br><span class="line">	<span class="comment">#接下来的收集变量，合并变量都是为了能够写入事件文件中用于tensoboard的可视化</span></span><br><span class="line">    <span class="comment">#收集变量</span></span><br><span class="line">    tf.summary.scalar(<span class="string">"error"</span>,error)</span><br><span class="line">    tf.summary.histogram(<span class="string">"weight"</span>,weight)</span><br><span class="line">    tf.summary.histogram(<span class="string">"bias"</span>,bias)</span><br><span class="line">    <span class="comment">#合并变量</span></span><br><span class="line">    all=tf.summary.merge_all()</span><br><span class="line"></span><br><span class="line">    <span class="comment">#初始化变量</span></span><br><span class="line">    init=tf.global_variables_initializer()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 创建事件文件</span></span><br><span class="line">    file_writer = tf.summary.FileWriter(<span class="string">"./tmp/linear"</span>, graph=tf.get_default_graph())</span><br><span class="line">    <span class="comment">#训练模型</span></span><br><span class="line">    <span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</span><br><span class="line">        <span class="comment">#初始化变量</span></span><br><span class="line">        sess.run(init)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">100</span>):</span><br><span class="line">            sess.run(optimizer)</span><br><span class="line">            print(<span class="string">"第%d次训练的权重%f,偏置%f,损失%f"</span>%(i+<span class="number">1</span>,weight.eval(),bias.eval(),error.eval()))</span><br><span class="line"></span><br><span class="line">            <span class="comment">#运行合并变量操作</span></span><br><span class="line">            summary=sess.run(all)</span><br><span class="line">            <span class="comment">#写入事件文件，别忘了还有一个参数i,用于将每次的结果都保存到文件中</span></span><br><span class="line">            file_writer.add_summary(summary,i)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">None</span></span><br></pre></td></tr></table></figure>
+
+<p>以上示例中出现了tf.summary函数，目前我学到的用处就是为了给可视化做准备，也就是tensorboard，那tensorboard的使用请看下面</p>
+<h3 id="TensorBoard-可视化学习"><a href="#TensorBoard-可视化学习" class="headerlink" title="TensorBoard:可视化学习"></a>TensorBoard:可视化学习</h3><ol>
+<li><p>数据序列化-events文件</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tf.summary.FileWriter(path, graph=sess.graph)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>不存在这个path也会自动新建一个路径的</p>
+</li>
+<li><p>生成文件的时候我遇到过一个小问题，就是文件的后缀名乱码了，后来网上一查，发现是因为本地计算机的名字不是英文的缘故，更改成英文之后重启就好了。</p>
+</li>
+<li><p>这个虽然是一个会“运行”的操作，但不一定需要在session中运行，可以独立出来。</p>
+</li>
+</ul>
+</li>
+<li><p>命令行中输入命令启动tensorboard</p>
+</li>
+</ol>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tensorboard --logdir="<span class="built_in">path</span>"</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/max827/imgcloud/master/data/20190711212119.png" alt></p>
+<p>之后可以在浏览器中输入localhost：6006来查看tensorboard</p>
+<p>这个玩意儿其实有点厉害的，可以可视化你的张量和操作，真正意义上的将你用tensorflow写出来的程序变成<strong>数据流图</strong>：</p>
+<p><img src="https://raw.githubusercontent.com/max827/imgcloud/master/data/20190711211050.png" alt></p>
+
+                
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    
+                        <li class="next">
+                            <a href="/2019/07/02/如何搭建自己的个人博客（hexo-GitHub）/" data-toggle="tooltip" data-placement="top" title="如何搭建自己的个人博客（hexo+GitHub）">Next post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                <br>
+
+                <!--打赏-->
+                
+                <!--打赏-->
+
+                <br>
+                <!--分享-->
+                
+                    <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
+                    <!--  css & js -->
+                    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+                
+                <!--分享-->
+                <br>                       
+                
+                <!-- require APlayer -->
+                
+
+                <!-- disqus comment start -->
+                
+                <!-- disqus comment end -->
+
+                
+				
+            </div>
+
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">Tags</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#tensorflow" title="tensorflow">tensorflow</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="http://www.sumoon.com" target="_blank">ACE theme</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/kinggozhang">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; John Doe 2019 
+                    <br>
+                    Powered by <a href="http://www.hexo.io">Hexo</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    Theme by <a href="https://github.com/kinggozhang/hexo-theme-ace">ACE</a> 
+					
+					
+					<i class="fa fa-eye" id="leancounter"></i>
+					
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+
+   <script src="https://cdn.staticfile.org/jquery/2.2.4/jquery.min.js"></script>
+
+
+
+<!-- Bootstrap Core JavaScript -->
+
+   <script src="https://cdn.staticfile.org/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+	<script src="/js/particles.js"></script>
+	<script src="/js/particles_config.js"></script>
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://yoursite.com/2019/07/09/tensorflow学习笔记/index.html/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+<script>
+    // dynamic User by Hux
+    var _baId = 'xxx';
+
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?" + _baId;
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+<!-- Image to hack wechat -->
+<img src="http://yoursite.com/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>
